@@ -61,6 +61,19 @@ class StudentController {
     await student.save();
     return res.json(student);
   }
+  async signIn(req, res) {
+    const { email } = req.body;
+
+    if (email) {
+      const studentExists = await Student.findOne({
+        where: { email }
+      });
+      if (!studentExists) {
+        return res.status(400).json({ error: "Student was not found." });
+      }
+    }
+    return res.json(email);
+  }
 }
 
 export default new StudentController();
